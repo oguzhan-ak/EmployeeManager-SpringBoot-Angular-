@@ -3,6 +3,7 @@ package com.oguzhan.employeemanager.service;
 import com.oguzhan.employeemanager.exception.UserNotFoundException;
 import com.oguzhan.employeemanager.model.Employee;
 import com.oguzhan.employeemanager.repo.EmployeeRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,7 @@ public class EmployeeService {
         );
     }
 
+    @Transactional
     public void deleteEmployee(Long id){
         employeeRepo.deleteEmployeeById(id);
     }
