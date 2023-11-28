@@ -12,4 +12,13 @@ export class BrigadeOrderService {
     public getBrigadeOrders(): Observable<BrigadeOrder[]> {
         return this.http.get<BrigadeOrder[]>(`${this.apiServerUrl}/all`);
     }
+
+    public updateBrigadeOrders(
+        brigadeOrder: BrigadeOrder
+    ): Observable<BrigadeOrder> {
+        return this.http.put<BrigadeOrder>(
+            `${this.apiServerUrl}/update`,
+            brigadeOrder
+        );
+    }
 }

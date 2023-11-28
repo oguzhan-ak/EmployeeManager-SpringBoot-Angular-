@@ -17,6 +17,7 @@ public class BrigadeOrder {
     private String code;
     private String dutyName;
     @OneToMany(mappedBy = "brigadeOrder", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy("rankType")
     private List<Rank> ranks = new ArrayList<>();
 
     public BrigadeOrder() {

@@ -18,6 +18,10 @@ public class BrigadeOrderService {
     }
 
     public List<BrigadeOrder> findAllBrigadeOrders(){
-        return brigadeOrderRepo.findAll();
+        return  brigadeOrderRepo.findAll();
+    }
+
+    public BrigadeOrder updateBrigadeOrder(BrigadeOrder brigadeOrder){
+        return brigadeOrderRepo.save(brigadeOrder);
     }
 }

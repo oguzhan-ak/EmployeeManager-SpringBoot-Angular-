@@ -2,12 +2,12 @@
     <div class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
-
             <p-table
                 #dt
                 rowGroupMode="rowspan"
                 groupRowsBy="hui"
                 [value]="brigadeOrders"
+                editMode="row"
                 responsiveLayout="scroll"
                 [rows]="10"
                 [globalFilterFields]="['hui', 'code', 'dutyName']"
@@ -16,6 +16,7 @@
                 [showCurrentPageReport]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 dataKey="id"
+                [loading]="loading"
             >
                 <ng-template pTemplate="caption">
                     <div
@@ -42,6 +43,7 @@
                         <th *ngFor="let col of rankColumns">
                             {{ col.header }}
                         </th>
+                        <th></th>
                     </tr>
                 </ng-template>
                 <ng-template
@@ -50,8 +52,10 @@
                     let-rowgroup="rowgroup"
                     let-rowspan="rowspan"
                     let-rowData
+                    let-editing="editing"
+                    let-ri="rowIndex"
                 >
-                    <tr>
+                    <tr [pEditableRow]="brigadeOrder">
                         <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
                             <span class="font-bold ml-2">{{
                                 brigadeOrder.hui
@@ -65,8 +69,59 @@
                             <span class="p-column-title">Duty Name</span>
                             {{ brigadeOrder.dutyName }}
                         </td>
-                        <td *ngFor="let col of rankColumns">
-                            {{ getRankValue(rowData, col.field) }}
+                        <td *ngFor="let col of rankColumns; index as i">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber
+                                        mode="decimal"
+                                        [useGrouping]="false"
+                                        [(ngModel)]="
+                                            brigadeOrder.ranks[i].amount
+                                        "
+                                        [allowEmpty]="false"
+                                        required
+                                    />
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ getRankValue(rowData, col.field) }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <div
+                                class="flex align-items-center justify-content-center gap-2"
+                            >
+                                <button
+                                    *ngIf="!editing"
+                                    pButton
+                                    pRipple
+                                    type="button"
+                                    pInitEditableRow
+                                    icon="pi pi-pencil"
+                                    (click)="onRowEditInit(brigadeOrder)"
+                                    class="p-button-rounded p-button-text"
+                                ></button>
+                                <button
+                                    *ngIf="editing"
+                                    pButton
+                                    pRipple
+                                    type="button"
+                                    pSaveEditableRow
+                                    icon="pi pi-check"
+                                    (click)="onRowEditSave(brigadeOrder)"
+                                    class="p-button-rounded p-button-text p-button-success mr-2"
+                                ></button>
+                                <button
+                                    *ngIf="editing"
+                                    pButton
+                                    pRipple
+                                    type="button"
+                                    pCancelEditableRow
+                                    icon="pi pi-times"
+                                    (click)="onRowEditCancel(brigadeOrder, ri)"
+                                    class="p-button-rounded p-button-text p-button-danger"
+                                ></button>
+                            </div>
                         </td>
                     </tr>
                 </ng-template>

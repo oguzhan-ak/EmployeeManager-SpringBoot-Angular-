@@ -12,14 +12,14 @@ import { BrigadeOrderService } from 'src/app/demo/service/brigadeOrder.service';
 })
 export class BrigadeOrderComponent implements OnInit {
     brigadeOrders: BrigadeOrder[] = [];
+    clonedBrigadeOrders: { [s: string]: BrigadeOrder } = {};
+    loading: boolean = false;
 
     rankColumns: any[] = [
-        { field: 'SERGEANT', header: 'Sergeant' },
-        { field: 'PETTY_OFFICER', header: 'Petty Officer' },
-        { field: 'SOLDIER', header: 'Soldier' },
+        { field: 'PETTY_OFFICER', index: 0, header: 'Petty Officer' },
+        { field: 'SERGEANT', index: 1, header: 'Sergeant' },
+        { field: 'SOLDIER', index: 2, header: 'Soldier' },
     ];
-
-    rowsPerPageOptions = [5, 10, 20];
 
     getRankValue(rowData: BrigadeOrder, field: string): number {
         var rank = rowData.ranks.filter(
@@ -41,9 +41,30 @@ export class BrigadeOrderComponent implements OnInit {
     }
 
     getBrigadeOrders(): void {
+        this.loading = true;
         this.brigadeOrderService.getBrigadeOrders().subscribe({
             next: (brigadeOrders: BrigadeOrder[]) => {
                 this.brigadeOrders = brigadeOrders;
+            },
+            error: (error: HttpErrorResponse) => {
+                alert(error.message);
+            },
+            complete: () => {
+                this.loading = false;
+            },
+        });
+    }
+
+    updateBrigadeOrder(brigadeOrder: BrigadeOrder): void {
+        this.brigadeOrderService.updateBrigadeOrders(brigadeOrder).subscribe({
+            next: (brigadeOrder: BrigadeOrder) => {
+                delete this.clonedBrigadeOrders[brigadeOrder.id.toString()];
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: 'Brigade Order is updated',
+                });
+                this.getBrigadeOrders();
             },
             error: (error: HttpErrorResponse) => {
                 alert(error.message);
@@ -56,5 +77,36 @@ export class BrigadeOrderComponent implements OnInit {
             (event.target as HTMLInputElement).value,
             'contains'
         );
+    }
+
+    onRowEditInit(brigadeOrder: BrigadeOrder) {
+        this.clonedBrigadeOrders[brigadeOrder.id.toString()] = JSON.parse(
+            JSON.stringify(brigadeOrder)
+        );
+    }
+
+    onRowEditSave(brigadeOrder: BrigadeOrder) {
+        if (
+            brigadeOrder.ranks[0].amount >= 0 &&
+            brigadeOrder.ranks[1].amount >= 0 &&
+            brigadeOrder.ranks[2].amount >= 0
+        ) {
+            this.updateBrigadeOrder(brigadeOrder);
+        } else {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Invalid Amount',
+            });
+        }
+    }
+
+    onRowEditCancel(brigadeOrder: BrigadeOrder, index: number) {
+        var copy = JSON.parse(JSON.stringify(this.brigadeOrders));
+        copy[index] = JSON.parse(
+            JSON.stringify(this.clonedBrigadeOrders[brigadeOrder.id.toString()])
+        );
+        this.brigadeOrders = copy;
+        delete this.clonedBrigadeOrders[brigadeOrder.id.toString()];
     }
 }
