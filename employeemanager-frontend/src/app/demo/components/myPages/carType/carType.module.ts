@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CrudRoutingModule } from './crud-routing.module';
-import { CrudComponent } from './crud.component';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
@@ -16,11 +14,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
+import { CarTypeComponent } from './carType.component';
+import { CarTypeRoutingModule } from './carType-routing.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        CrudRoutingModule,
+        CarTypeRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
@@ -36,6 +36,6 @@ import { DialogModule } from 'primeng/dialog';
         InputNumberModule,
         DialogModule,
     ],
-    declarations: [CrudComponent],
+    declarations: [CarTypeComponent],
 })
-export class CrudModule {}
+export class CarTypeModule {}

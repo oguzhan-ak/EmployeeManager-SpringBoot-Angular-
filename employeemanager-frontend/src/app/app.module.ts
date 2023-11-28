@@ -11,20 +11,25 @@ import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarTypeService } from './demo/service/carType.service';
+import { BrigadeOrderService } from './demo/service/brigadeOrder.service';
 
 @NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent
-    ],
-    imports: [
-        AppRoutingModule,
-        AppLayoutModule
-    ],
+    declarations: [AppComponent, NotfoundComponent],
+    imports: [AppRoutingModule, AppLayoutModule, BrowserAnimationsModule],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
+        CountryService,
+        CustomerService,
+        EventService,
+        IconService,
+        NodeService,
+        PhotoService,
+        ProductService,
+        CarTypeService,
+        BrigadeOrderService,
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

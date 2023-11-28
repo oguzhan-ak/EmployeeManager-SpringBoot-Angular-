@@ -1,0 +1,5 @@
+enum RankType {
+    SERGEANT = 'SERGEANT',
+    PETTY_OFFICER = 'PETTY_OFFICER',
+    SOLDIER = 'SOLDIER',
+}

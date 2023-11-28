@@ -3,9 +3,25 @@ import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 
 @NgModule({
-    imports: [RouterModule.forChild([
-        { path: '', component: DashboardComponent }
-    ])],
-    exports: [RouterModule]
+    imports: [
+        RouterModule.forChild([
+            { path: '', component: DashboardComponent },
+            {
+                path: 'carType',
+                loadChildren: () =>
+                    import('../myPages/carType/carType.module').then(
+                        (m) => m.CarTypeModule
+                    ),
+            },
+            {
+                path: 'brigadeOrder',
+                loadChildren: () =>
+                    import('../myPages/brigadeOrder/brigadeOrder.module').then(
+                        (m) => m.BrigadeOrderModule
+                    ),
+            },
+        ]),
+    ],
+    exports: [RouterModule],
 })
-export class DashboardsRoutingModule { }
+export class DashboardsRoutingModule {}

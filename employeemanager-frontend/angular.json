@@ -20,18 +20,15 @@
                         "outputPath": "dist/sakai-ng",
                         "index": "src/index.html",
                         "main": "src/main.ts",
-                        "polyfills": [
-                            "zone.js"
-                        ],
+                        "polyfills": ["zone.js"],
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "aot": true,
-                        "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
-                        ],
+                        "assets": ["src/favicon.ico", "src/assets"],
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "node_modules/primeng/resources/themes/lara-light-purple/theme.css",
+                            "node_modules/primeng/resources/primeng.min.css"
                         ],
                         "scripts": [
                             "node_modules/prismjs/prism.js",
@@ -96,15 +93,14 @@
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
                         "main": "src/test.ts",
-                        "polyfills": [
-                            "zone.js",
-                            "zone.js/testing"
-                        ],
+                        "polyfills": ["zone.js", "zone.js/testing"],
                         "tsConfig": "tsconfig.spec.json",
                         "karmaConfig": "karma.conf.js",
                         "inlineStyleLanguage": "scss",
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "node_modules/primeng/resources/themes/lara-light-purple/theme.css",
+                            "node_modules/primeng/resources/primeng.min.css"
                         ],
                         "scripts": [],
                         "assets": [
@@ -117,19 +113,14 @@
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
-                        "tsConfig": [
-                            "tsconfig.app.json",
-                            "tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
+                        "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**"]
                     }
                 }
             }
         }
     },
     "cli": {
-      "analytics": false
+        "analytics": false
     }
 }
