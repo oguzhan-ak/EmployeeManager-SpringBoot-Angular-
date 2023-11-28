@@ -1,7 +1,8 @@
-package com.oguzhan.employeemanager;
+package com.oguzhan.employeemanager.resource;
 
 import com.oguzhan.employeemanager.model.CarType;
 import com.oguzhan.employeemanager.service.CarTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @RequestMapping("/carType")
 public class CarTypeResource {
     private final CarTypeService carTypeService;
-
+    @Autowired
     public CarTypeResource(CarTypeService carTypeService) {
         this.carTypeService = carTypeService;
     }

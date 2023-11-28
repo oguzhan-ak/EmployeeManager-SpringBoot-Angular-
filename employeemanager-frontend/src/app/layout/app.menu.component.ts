@@ -31,6 +31,11 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-table',
                         routerLink: ['/brigadeOrder'],
                     },
+                    {
+                        label: 'Korpus Order',
+                        icon: 'pi pi-fw pi-table',
+                        routerLink: ['/korpusOrder'],
+                    },
                 ],
             },
             {

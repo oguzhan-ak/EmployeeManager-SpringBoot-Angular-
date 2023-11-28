@@ -20,6 +20,13 @@ import { DashboardComponent } from './dashboard.component';
                         (m) => m.BrigadeOrderModule
                     ),
             },
+            {
+                path: 'korpusOrder',
+                loadChildren: () =>
+                    import('../myPages/korpusOrder/korpusOrder.module').then(
+                        (m) => m.KorpusOrderModule
+                    ),
+            },
         ]),
     ],
     exports: [RouterModule],

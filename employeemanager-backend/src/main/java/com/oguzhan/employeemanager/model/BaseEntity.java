@@ -1,2 +1,4 @@
-package com.oguzhan.employeemanager.model;public class BaseEntity {
+package com.oguzhan.employeemanager.model;
+
+public class BaseEntity {
 }
