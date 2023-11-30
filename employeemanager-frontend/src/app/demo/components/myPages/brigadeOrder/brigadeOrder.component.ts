@@ -22,11 +22,11 @@ export class BrigadeOrderComponent implements OnInit {
     ];
 
     getRankValue(rowData: BrigadeOrder, field: string): number {
-        var rank = rowData.ranks.filter(
-            (rank: Rank) => rank.rankType === field
+        var brigadeRanks = rowData.brigadeRanks.filter(
+            (brigadeRank: Rank) => brigadeRank.rankType === field
         );
-        if (rank.length > 0) {
-            return rank[0].amount;
+        if (brigadeRanks.length > 0) {
+            return brigadeRanks[0].amount;
         }
         return 0;
     }
@@ -42,7 +42,7 @@ export class BrigadeOrderComponent implements OnInit {
 
     getBrigadeOrders(): void {
         this.loading = true;
-        this.brigadeOrderService.getBrigadeOrders().subscribe({
+        this.brigadeOrderService.getBrigadeOrders(1, 1).subscribe({
             next: (brigadeOrders: BrigadeOrder[]) => {
                 this.brigadeOrders = brigadeOrders;
             },
@@ -87,9 +87,9 @@ export class BrigadeOrderComponent implements OnInit {
 
     onRowEditSave(brigadeOrder: BrigadeOrder) {
         if (
-            brigadeOrder.ranks[0].amount >= 0 &&
-            brigadeOrder.ranks[1].amount >= 0 &&
-            brigadeOrder.ranks[2].amount >= 0
+            brigadeOrder.brigadeRanks[0].amount >= 0 &&
+            brigadeOrder.brigadeRanks[1].amount >= 0 &&
+            brigadeOrder.brigadeRanks[2].amount >= 0
         ) {
             this.updateBrigadeOrder(brigadeOrder);
         } else {

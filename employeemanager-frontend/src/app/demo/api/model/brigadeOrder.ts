@@ -1,9 +1,10 @@
+import { Brigade } from './brigade';
 import { Rank } from './rank';
+import { Tmk } from './tmk';
 
 export interface BrigadeOrder {
     id?: number;
-    hui?: string;
-    code?: string;
-    dutyName?: string;
-    ranks?: Rank[];
+    brigade?: Brigade;
+    tmk?: Tmk;
+    brigadeRanks?: Rank[];
 }

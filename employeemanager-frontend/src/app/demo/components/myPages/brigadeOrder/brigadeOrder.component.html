@@ -5,12 +5,12 @@
             <p-table
                 #dt
                 rowGroupMode="rowspan"
-                groupRowsBy="hui"
+                groupRowsBy="tmk.hui"
                 [value]="brigadeOrders"
                 editMode="row"
                 responsiveLayout="scroll"
                 [rows]="10"
-                [globalFilterFields]="['hui', 'code', 'dutyName']"
+                [globalFilterFields]="['tmk.hui', 'tmk.code', 'tmk.dutyName']"
                 [paginator]="true"
                 [rowsPerPageOptions]="[10, 20, 30]"
                 [showCurrentPageReport]="true"
@@ -58,16 +58,16 @@
                     <tr [pEditableRow]="brigadeOrder">
                         <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
                             <span class="font-bold ml-2">{{
-                                brigadeOrder.hui
+                                brigadeOrder.tmk.hui
                             }}</span>
                         </td>
                         <td style="min-width: 10rem">
                             <span class="p-column-title">Code</span>
-                            {{ brigadeOrder.code }}
+                            {{ brigadeOrder.tmk.code }}
                         </td>
                         <td style="min-width: 10rem">
                             <span class="p-column-title">Duty Name</span>
-                            {{ brigadeOrder.dutyName }}
+                            {{ brigadeOrder.tmk.dutyName }}
                         </td>
                         <td *ngFor="let col of rankColumns; index as i">
                             <p-cellEditor>
@@ -76,7 +76,7 @@
                                         mode="decimal"
                                         [useGrouping]="false"
                                         [(ngModel)]="
-                                            brigadeOrder.ranks[i].amount
+                                            brigadeOrder.brigadeRanks[i].amount
                                         "
                                         [allowEmpty]="false"
                                         required

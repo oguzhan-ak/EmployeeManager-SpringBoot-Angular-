@@ -9,8 +9,13 @@ export class BrigadeOrderService {
     private apiServerUrl = environment.apiBaseUrl + '/brigadeOrder';
     constructor(private http: HttpClient) {}
 
-    public getBrigadeOrders(): Observable<BrigadeOrder[]> {
-        return this.http.get<BrigadeOrder[]>(`${this.apiServerUrl}/all`);
+    public getBrigadeOrders(
+        brigadeId: number,
+        korpusOrderId: number
+    ): Observable<BrigadeOrder[]> {
+        return this.http.get<BrigadeOrder[]>(
+            `${this.apiServerUrl}/all/${brigadeId}/${korpusOrderId}`
+        );
     }
 
     public updateBrigadeOrders(

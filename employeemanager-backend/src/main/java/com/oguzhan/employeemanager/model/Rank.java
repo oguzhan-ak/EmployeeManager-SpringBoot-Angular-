@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.oguzhan.employeemanager.enums.RankType;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(name = "Rank")
 @Table(name = "rank")
 public class Rank {
@@ -14,16 +17,9 @@ public class Rank {
     @Enumerated(EnumType.STRING)
     private RankType rankType;
     private Long amount;
-    @ManyToOne
-    @JoinColumn(name="brigade_order_id",referencedColumnName="id",nullable=false)
+    @ManyToOne(fetch = FetchType.EAGER)
     private BrigadeOrder brigadeOrder;
 
-    public Rank(RankType rankType, Long amount) {
-        this.rankType = rankType;
-        this.amount = amount;
-    }
-
-    @JsonBackReference
     public BrigadeOrder getBrigadeOrder() {
         return brigadeOrder;
     }
@@ -32,8 +28,14 @@ public class Rank {
         this.brigadeOrder = brigadeOrder;
     }
 
+    public Rank(RankType rankType, Long amount) {
+        this.rankType = rankType;
+        this.amount = amount;
+    }
+
     public Rank() {
     }
+
 
     public Long getId() {
         return id;

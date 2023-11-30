@@ -14,6 +14,7 @@ import { PhotoService } from './demo/service/photo.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarTypeService } from './demo/service/carType.service';
 import { BrigadeOrderService } from './demo/service/brigadeOrder.service';
+import { KorpusOrderService } from './demo/service/korpusOrder.service';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -29,6 +30,7 @@ import { BrigadeOrderService } from './demo/service/brigadeOrder.service';
         ProductService,
         CarTypeService,
         BrigadeOrderService,
+        KorpusOrderService,
     ],
     bootstrap: [AppComponent],
 })

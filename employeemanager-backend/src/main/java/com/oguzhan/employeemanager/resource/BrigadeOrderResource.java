@@ -1,5 +1,6 @@
 package com.oguzhan.employeemanager.resource;
 
+import com.oguzhan.employeemanager.dto.BrigadeOrderDTO;
 import com.oguzhan.employeemanager.model.BrigadeOrder;
 import com.oguzhan.employeemanager.service.BrigadeOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,15 @@ public class BrigadeOrderResource {
         this.brigadeOrderService = brigadeOrderService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<BrigadeOrder>> getAllBrigadeOrders(){
-        List<BrigadeOrder> brigadeOrders= brigadeOrderService.findAllBrigadeOrders();
+    @GetMapping("/all/{brigadeId}/{korpusOrderId}")
+    public ResponseEntity<List<BrigadeOrderDTO>> getAllBrigadeOrders(@PathVariable Long brigadeId,@PathVariable Long korpusOrderId){
+        List<BrigadeOrderDTO> brigadeOrders= brigadeOrderService.findAllBrigadeOrdersByBrigadeIdAndKorpusOrderId(brigadeId, korpusOrderId);
         return new ResponseEntity<>(brigadeOrders, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<BrigadeOrder> updateBrigadeOrder(@RequestBody BrigadeOrder brigadeOrder){
-        BrigadeOrder updatedBrigadeOrder= brigadeOrderService.updateBrigadeOrder(brigadeOrder);
+    public ResponseEntity<BrigadeOrderDTO> updateBrigadeOrder(@RequestBody BrigadeOrderDTO brigadeOrder){
+        BrigadeOrderDTO updatedBrigadeOrder= brigadeOrderService.updateBrigadeOrder(brigadeOrder);
         return new ResponseEntity<>(updatedBrigadeOrder, HttpStatus.OK);
     }
 }

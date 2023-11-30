@@ -5,12 +5,12 @@
             <p-table
                 #dt
                 rowGroupMode="rowspan"
-                groupRowsBy="hui"
-                [value]="brigadeOrders"
+                groupRowsBy="tmk.hui"
+                [value]="korpusOrders"
                 editMode="row"
                 responsiveLayout="scroll"
                 [rows]="10"
-                [globalFilterFields]="['hui', 'code', 'dutyName']"
+                [globalFilterFields]="['tmk.hui', 'tmk.code', 'tmk.dutyName']"
                 [paginator]="true"
                 [rowsPerPageOptions]="[10, 20, 30]"
                 [showCurrentPageReport]="true"
@@ -37,37 +37,50 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Hui</th>
-                        <th>Code</th>
-                        <th>Duty Name</th>
+                        <th rowspan="2">Hui</th>
+                        <th rowspan="2">Code</th>
+                        <th rowspan="2">Duty Name</th>
+                        <th rowspan="2" *ngFor="let col of rankColumns">
+                            {{ col.header }}
+                        </th>
+                        <th colspan="3" *ngFor="let col of brigadeColumns">
+                            {{ col.header }}
+                        </th>
+                    </tr>
+                    <tr>
                         <th *ngFor="let col of rankColumns">
                             {{ col.header }}
                         </th>
-                        <th></th>
+                        <th *ngFor="let col of rankColumns">
+                            {{ col.header }}
+                        </th>
+                        <th *ngFor="let col of rankColumns">
+                            {{ col.header }}
+                        </th>
                     </tr>
                 </ng-template>
                 <ng-template
                     pTemplate="body"
-                    let-brigadeOrder
+                    let-korpusOrder
                     let-rowgroup="rowgroup"
                     let-rowspan="rowspan"
                     let-rowData
                     let-editing="editing"
                     let-ri="rowIndex"
                 >
-                    <tr [pEditableRow]="brigadeOrder">
+                    <tr [pEditableRow]="korpusOrder">
                         <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
                             <span class="font-bold ml-2">{{
-                                brigadeOrder.hui
+                                korpusOrder.tmk.hui
                             }}</span>
                         </td>
                         <td style="min-width: 10rem">
                             <span class="p-column-title">Code</span>
-                            {{ brigadeOrder.code }}
+                            {{ korpusOrder.tmk.code }}
                         </td>
                         <td style="min-width: 10rem">
                             <span class="p-column-title">Duty Name</span>
-                            {{ brigadeOrder.dutyName }}
+                            {{ korpusOrder.tmk.dutyName }}
                         </td>
                         <td *ngFor="let col of rankColumns; index as i">
                             <p-cellEditor>
@@ -76,7 +89,8 @@
                                         mode="decimal"
                                         [useGrouping]="false"
                                         [(ngModel)]="
-                                            brigadeOrder.ranks[i].amount
+                                            korpusOrder.brigadeOrders[0]
+                                                .brigadeRanks[i].amount
                                         "
                                         [allowEmpty]="false"
                                         required
@@ -88,7 +102,7 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <td>
+                        <!-- <td>
                             <div
                                 class="flex align-items-center justify-content-center gap-2"
                             >
@@ -123,7 +137,7 @@
                                     class="p-button-rounded p-button-text p-button-danger"
                                 ></button>
                             </div>
-                        </td>
+                        </td> -->
                     </tr>
                 </ng-template>
             </p-table>

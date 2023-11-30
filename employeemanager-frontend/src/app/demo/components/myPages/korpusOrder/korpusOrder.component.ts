@@ -3,16 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { BrigadeOrder } from 'src/app/demo/api/model/brigadeOrder';
+import { KorpusOrder } from 'src/app/demo/api/model/korpusOrder';
 import { Rank } from 'src/app/demo/api/model/rank';
-import { BrigadeOrderService } from 'src/app/demo/service/brigadeOrder.service';
+import { KorpusOrderService } from 'src/app/demo/service/korpusOrder.service';
 
 @Component({
     templateUrl: './korpusOrder.component.html',
     providers: [MessageService],
 })
 export class KorpusOrderComponent implements OnInit {
-    brigadeOrders: BrigadeOrder[] = [];
-    clonedBrigadeOrders: { [s: string]: BrigadeOrder } = {};
+    korpusOrders: KorpusOrder[] = [];
+    // clonedBrigadeOrders: { [s: string]: BrigadeOrder } = {};
     loading: boolean = false;
 
     rankColumns: any[] = [
@@ -21,18 +22,24 @@ export class KorpusOrderComponent implements OnInit {
         { field: 'SOLDIER', index: 2, header: 'Soldier' },
     ];
 
+    brigadeColumns: any[] = [
+        { field: 1, index: 0, header: '1.Tugay' },
+        { field: 2, index: 1, header: '2.Tugay' },
+        { field: 3, index: 2, header: '3.Tugay' },
+    ];
+
     getRankValue(rowData: BrigadeOrder, field: string): number {
-        var rank = rowData.ranks.filter(
-            (rank: Rank) => rank.rankType === field
-        );
-        if (rank.length > 0) {
-            return rank[0].amount;
-        }
+        // var brigadeRanks = rowData.brigadeRanks.filter(
+        //     (brigadeRank: Rank) => brigadeRank.rankType === field
+        // );
+        // if (brigadeRanks.length > 0) {
+        //     return brigadeRanks[0].amount;
+        // }
         return 0;
     }
 
     constructor(
-        private brigadeOrderService: BrigadeOrderService,
+        private korpusOrderService: KorpusOrderService,
         private messageService: MessageService
     ) {}
 
@@ -42,9 +49,9 @@ export class KorpusOrderComponent implements OnInit {
 
     getBrigadeOrders(): void {
         this.loading = true;
-        this.brigadeOrderService.getBrigadeOrders().subscribe({
-            next: (brigadeOrders: BrigadeOrder[]) => {
-                this.brigadeOrders = brigadeOrders;
+        this.korpusOrderService.getKorpusOrders(1).subscribe({
+            next: (korpusOrders: KorpusOrder[]) => {
+                this.korpusOrders = korpusOrders;
             },
             error: (error: HttpErrorResponse) => {
                 alert(error.message);
@@ -55,22 +62,22 @@ export class KorpusOrderComponent implements OnInit {
         });
     }
 
-    updateBrigadeOrder(brigadeOrder: BrigadeOrder): void {
-        this.brigadeOrderService.updateBrigadeOrders(brigadeOrder).subscribe({
-            next: (brigadeOrder: BrigadeOrder) => {
-                delete this.clonedBrigadeOrders[brigadeOrder.id.toString()];
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Success',
-                    detail: 'Brigade Order is updated',
-                });
-                this.getBrigadeOrders();
-            },
-            error: (error: HttpErrorResponse) => {
-                alert(error.message);
-            },
-        });
-    }
+    // updateBrigadeOrder(brigadeOrder: BrigadeOrder): void {
+    //     this.brigadeOrderService.updateBrigadeOrders(brigadeOrder).subscribe({
+    //         next: (brigadeOrder: BrigadeOrder) => {
+    //             delete this.clonedBrigadeOrders[brigadeOrder.id.toString()];
+    //             this.messageService.add({
+    //                 severity: 'success',
+    //                 summary: 'Success',
+    //                 detail: 'Brigade Order is updated',
+    //             });
+    //             this.getBrigadeOrders();
+    //         },
+    //         error: (error: HttpErrorResponse) => {
+    //             alert(error.message);
+    //         },
+    //     });
+    // }
 
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal(
@@ -79,34 +86,34 @@ export class KorpusOrderComponent implements OnInit {
         );
     }
 
-    onRowEditInit(brigadeOrder: BrigadeOrder) {
-        this.clonedBrigadeOrders[brigadeOrder.id.toString()] = JSON.parse(
-            JSON.stringify(brigadeOrder)
-        );
-    }
+    // onRowEditInit(brigadeOrder: BrigadeOrder) {
+    //     this.clonedBrigadeOrders[brigadeOrder.id.toString()] = JSON.parse(
+    //         JSON.stringify(brigadeOrder)
+    //     );
+    // }
 
-    onRowEditSave(brigadeOrder: BrigadeOrder) {
-        if (
-            brigadeOrder.ranks[0].amount >= 0 &&
-            brigadeOrder.ranks[1].amount >= 0 &&
-            brigadeOrder.ranks[2].amount >= 0
-        ) {
-            this.updateBrigadeOrder(brigadeOrder);
-        } else {
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Invalid Amount',
-            });
-        }
-    }
+    // onRowEditSave(brigadeOrder: BrigadeOrder) {
+    //     if (
+    //         brigadeOrder.brigadeRanks[0].amount >= 0 &&
+    //         brigadeOrder.brigadeRanks[1].amount >= 0 &&
+    //         brigadeOrder.brigadeRanks[2].amount >= 0
+    //     ) {
+    //         this.updateBrigadeOrder(brigadeOrder);
+    //     } else {
+    //         this.messageService.add({
+    //             severity: 'error',
+    //             summary: 'Error',
+    //             detail: 'Invalid Amount',
+    //         });
+    //     }
+    // }
 
-    onRowEditCancel(brigadeOrder: BrigadeOrder, index: number) {
-        var copy = JSON.parse(JSON.stringify(this.brigadeOrders));
-        copy[index] = JSON.parse(
-            JSON.stringify(this.clonedBrigadeOrders[brigadeOrder.id.toString()])
-        );
-        this.brigadeOrders = copy;
-        delete this.clonedBrigadeOrders[brigadeOrder.id.toString()];
-    }
+    // onRowEditCancel(brigadeOrder: BrigadeOrder, index: number) {
+    //     var copy = JSON.parse(JSON.stringify(this.brigadeOrders));
+    //     copy[index] = JSON.parse(
+    //         JSON.stringify(this.clonedBrigadeOrders[brigadeOrder.id.toString()])
+    //     );
+    //     this.brigadeOrders = copy;
+    //     delete this.clonedBrigadeOrders[brigadeOrder.id.toString()];
+    // }
 }
